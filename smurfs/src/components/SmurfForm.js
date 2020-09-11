@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const initialFormData = {
   name: "",
@@ -11,13 +12,10 @@ const initialFormData = {
 const SmurfForm = (props) => {
   const [formData, setFormData] = useState(initialFormData);
 
-  console.log(props.smurfs);
-
   const postNewSmurf = (newsmurf) => {
     axios
       .post("http://localhost:3333/smurfs", newsmurf)
-      .then((res) => {
-      })
+      .then((res) => {})
       .catch((error) => {
         console.log(error);
       })
@@ -49,6 +47,7 @@ const SmurfForm = (props) => {
 
   return (
     <div>
+      <Link to="/">Home</Link>
       <form onSubmit={submit}>
         <label>
           Smurfs Name:

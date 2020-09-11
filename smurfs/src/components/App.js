@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import { fetchSmurfs } from "../store/actions/index";
 import SmurfList from "./SmurfList";
 import DotLoader from "react-spinners/DotLoader";
+import SmurfForm from "./SmurfForm";
+import { Switch, Route } from "react-router-dom";
 
 
 const App = (props) => {
@@ -12,19 +14,27 @@ const App = (props) => {
   useEffect(() => {
     fetchSmurfs();
   }, [fetchSmurfs]);
-
+console.log(props.smurfs)
   return (
     <div className="App">
       <h1>SMURF VILLAGE MEMBERS!</h1>
       <div>
         {!loadingSmurfs ? (
-          <SmurfList />
+          <Switch>
+            <Route path="/MakeANew">
+              <SmurfForm />
+            </Route>
+            <Route path="/">
+              <SmurfList />
+            </Route>
+          </Switch>
         ) : (
           <div className="loading">
             <DotLoader className="loader" />
             &nbsp; Looking For Smurfs
           </div>
         )}
+
         {errorMessage !== "" ? <div>{errorMessage}</div> : null}
       </div>
     </div>
@@ -34,6 +44,7 @@ function mapStateToProps(state) {
   return {
     loadingSmurfs: state.loadingSmurfs,
     errorMessage: state.errorMessage,
+    smurfs: state.smurfs
   };
 }
 export default connect(mapStateToProps, { fetchSmurfs })(App);
