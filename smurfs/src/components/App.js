@@ -1,8 +1,10 @@
-import React, {  useEffect } from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import { connect } from "react-redux";
 import { fetchSmurfs } from "../store/actions/index";
 import SmurfList from "./SmurfList";
+import DotLoader from "react-spinners/DotLoader";
+
 
 const App = (props) => {
   const { fetchSmurfs, loadingSmurfs, errorMessage } = props;
@@ -15,7 +17,15 @@ const App = (props) => {
     <div className="App">
       <h1>SMURF VILLAGE MEMBERS!</h1>
       <div>
-        <SmurfList />
+        {!loadingSmurfs ? (
+          <SmurfList />
+        ) : (
+          <div className="loading">
+            <DotLoader className="loader" />
+            &nbsp; Looking For Smurfs
+          </div>
+        )}
+        {errorMessage !== "" ? <div>{errorMessage}</div> : null}
       </div>
     </div>
   );
